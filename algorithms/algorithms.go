@@ -2,10 +2,27 @@ package algorithms
 
 import "sync"
 
+/*
+
+It was in main
+
+var MyCache = CacheType{
+	Cache: make(map[uint64]Word),
+}
+MyCache.AddWordToCache("слово", "word")
+MyCache.AddWordToCache("имя", "name")
+MyCache.AddWordToCache("фамилия", "surname")
+
+for _, v := range MyCache.Cache {
+fmt.Printf("%+v\n", v)
+}
+
+*/
+
 type Word struct {
 	Rus string `json:"rus" bson:"rus"`
 	Eng string `json:"eng" bson:"eng"`
-	Id uint64 `json:"id" bson:"_id"`
+	Id  uint64 `json:"id" bson:"_id"`
 }
 
 type CacheType struct {

@@ -1,0 +1,26 @@
+.reg_auth {
+    width: 300px;
+    height: 850px;
+
+    margin-left: auto;
+    margin-right: auto;
+    position: relative
+}
+
+.content {
+    background: aliceblue;
+    font-size: 20px;
+    border: 1px solid #000000;
+    padding: 0 30px 30px 30px; /* top right bottom left */
+    margin-left: auto;
+    margin-right: auto;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%)
+}
+
+.reg_auth_form {
+    padding-bottom: 5px;
+    display: block;
+}
+

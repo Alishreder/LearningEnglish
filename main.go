@@ -1,21 +1,28 @@
 package main
 
 import (
-	. "dictionaryProject/algorithms"
 	"fmt"
+	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 
 func main() {
-	var MyCache = CacheType{
-		Cache: make(map[uint64]Word),
-	}
-	MyCache.AddWordToCache("слово", "word")
-	MyCache.AddWordToCache("имя", "name")
-	MyCache.AddWordToCache("фамилия", "surname")
 
-	for _, v := range MyCache.Cache {
-		fmt.Printf("%+v\n", v)
-	}
 
+	router := gin.Default()
+	router.GET("/", Default)
+
+	router.Static("/static", "./static")
+	router.LoadHTMLGlob("templates/*.html")
+
+	err := router.Run(":8080")
+	if err != nil {
+		fmt.Println("Cant listen and serve on 0.0.0.0:8080")
+		return
+	}
+}
+
+func Default(c *gin.Context) {
+	c.HTML(http.StatusOK, "authorization.html", nil)
 }
