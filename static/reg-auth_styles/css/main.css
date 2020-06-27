@@ -267,7 +267,7 @@ iframe {
 }
 
 .focus-input100::after {
-  font-family: Poppins-Regular;
+  font-family: Poppins-Regular, serif;
   font-size: 15px;
   color: #999999;
   line-height: 1.2;

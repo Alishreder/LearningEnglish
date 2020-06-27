@@ -24,3 +24,59 @@
     display: block;
 }
 
+/* For table */
+
+table {
+    border:1px solid #e0e0e0;
+    width:70%;
+    margin:5% auto 0;
+    border-radius:5px;
+}
+
+th, td {
+    padding:18px 28px 18px;
+}
+
+th {
+    padding-top:22px;
+    text-shadow: 1px 1px 1px #fff;
+    background:#e8eaeb;
+}
+
+td {
+    border-top:1px solid #e0e0e0;
+    border-right:1px solid #e0e0e0;
+    padding-top: 5px;
+}
+
+tr.odd-row td {
+    background:#f6f6f6;
+}
+
+td.first, th.first {
+    text-align:left
+}
+
+td.last {
+    border-right:none;
+}
+
+.btn {
+    border: 0;
+    border-radius: 3px;
+    font-size: 14px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+    padding: 1px 5px; /* top right bottom left */
+    float:right;
+    margin-left: 5px;
+}
+
+.deleteWord {
+    color: white; /* White text */
+    background-color: darkred; /* Blue background */
+}
+
+.addToLearnList {
+    color: white; /* White text */
+    background-color: green; /* Blue background */
+}

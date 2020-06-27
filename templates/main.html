@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Learning English</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../static/reg-auth_styles/js/main.js"></script>
+    <script src="../static/js/main.js"></script>
+
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="../static/reg-auth_styles/images/icons/favicon.ico"/>
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="../static/reg-auth_styles/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="../static/reg-auth_styles/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="../static/reg-auth_styles/fonts/iconic/css/material-design-iconic-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="../static/reg-auth_styles/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="../static/reg-auth_styles/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="../static/reg-auth_styles/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="../static/reg-auth_styles/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="../static/reg-auth_styles/vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="../static/reg-auth_styles/css/util.css">
+    <link rel="stylesheet" type="text/css" href="../static/reg-auth_styles/css/main.css">
+    <!--===============================================================================================-->
+</head>
+<body>
+{{.User.Email}}
+<table>
+    <tr>
+        <th>Word</th>
+        <th>Translate</th>
+    </tr>
+    {{range .User.Dictionary}}
+        <tr>
+            <td>{{.Word}}</td>
+            <td>
+                {{.Translate}}
+                <button class="btn deleteWord"id="{{.WordId}}"><i class="fa fa-trash"></i></button>
+                <button class="btn addToLearnList" action="/addToLearnList"  id="{{.WordId}}">Learn</button>
+            </td>
+            {{.WantToLearn}}
+        </tr>
+    {{end}}
+</table>
+
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100">
+
+
+            <form class="login100-form validate-form" action="/addNewWord" method="post">
+					<span class="login100-form-title p-b-26">
+						Type a word you want to learn
+					</span>
+
+                <div class="wrap-input100 validate-input">
+                    <input class="input100" type="text" name="word">
+                    <span class="focus-input100" data-placeholder="Word"></span>
+                </div>
+
+                <div class="wrap-input100 validate-input">
+                    <input class="input100" type="text" name="translate">
+                    <span class="focus-input100" data-placeholder="Translate"></span>
+                </div>
+
+                <div class="container-login100-form-btn">
+                    <div class="wrap-login100-form-btn">
+                        <div class="login100-form-bgbtn"></div>
+                        <button class="login100-form-btn addWord">
+                            Add to dictionary
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div id="dropDownSelect1"></div>
+
+<!--===============================================================================================-->
+<script src="../static/reg-auth_styles/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+<script src="../static/reg-auth_styles/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+<script src="../static/reg-auth_styles/vendor/bootstrap/js/popper.js"></script>
+<script src="../static/reg-auth_styles/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+<script src="../static/reg-auth_styles/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+<script src="../static/reg-auth_styles/vendor/daterangepicker/moment.min.js"></script>
+<script src="../static/reg-auth_styles/vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+<script src="../static/reg-auth_styles/vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+<script src="../static/reg-auth_styles/js/main.js"></script>
+</body>
+</html>

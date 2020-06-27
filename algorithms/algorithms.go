@@ -1,6 +1,62 @@
 package algorithms
 
-import "sync"
+import (
+	. "dictionaryProject/data"
+	"fmt"
+	"github.com/gin-gonic/gin"
+	"net/http"
+	"strconv"
+)
+
+func AddNewWord(c *gin.Context) {
+	word := c.PostForm("word")
+	translate := c.PostForm("translate")
+	if word != "" || translate != "" {
+		id := CurrentUser.LastWordId + 1
+		CurrentUser.LastWordId++
+		CurrentUser.Dictionary = append(CurrentUser.Dictionary, WordTranslate{Word: word, Translate: translate, WordId: id, WantToLearn: true})
+		err := Collection.Update(Obj{"_id": CurrId}, CurrentUser)
+		if err != nil {
+			c.String(http.StatusInternalServerError, "AddNewWord: fail while trying to add new word to dictionary: ", err)
+		}
+		fmt.Println(CurrentUser, CurrId)
+	}
+
+	c.Status(http.StatusOK)
+}
+
+func DeleteWord(c *gin.Context) {
+	idInt, _ := strconv.Atoi(c.Param("id"))
+	idToDelete := uint64(idInt)
+	for i, v := range CurrentUser.Dictionary {
+		if v.WordId == idToDelete {
+			CurrentUser.Dictionary = append(CurrentUser.Dictionary[:i], CurrentUser.Dictionary[i+1:]...)
+			err := Collection.Update(Obj{"_id": CurrId}, CurrentUser)
+			if err != nil {
+				c.String(http.StatusInternalServerError, "DeleteWord: fail while trying to delete word: ", err)
+			}
+		}
+	}
+
+	c.Status(http.StatusOK)
+}
+
+func AddToLearnList(c *gin.Context) {
+	idInt, _ := strconv.Atoi(c.Param("id"))
+	idToLearn := uint64(idInt)
+	for i, v := range CurrentUser.Dictionary {
+		if v.WordId == idToLearn {
+			CurrentUser.Dictionary[i].WantToLearn = true
+		}
+	}
+
+	c.Status(http.StatusOK)
+}
+
+// func Learn(c *gin.Context) {
+// 	CurrentUser
+// }
+
 
 /*
 
@@ -19,33 +75,8 @@ fmt.Printf("%+v\n", v)
 
 */
 
-type Word struct {
-	Rus string `json:"rus" bson:"rus"`
-	Eng string `json:"eng" bson:"eng"`
-	Id  uint64 `json:"id" bson:"_id"`
-}
-
-type CacheType struct {
-	Cache map[uint64]Word
-	sync.RWMutex
-	sync.WaitGroup
-}
-
-func (c *CacheType) SetId() uint64 {
-	return uint64(len(c.Cache) + 1)
-}
-
-func (c *CacheType) AddWordToCache(rus, eng string) {
-	newId := c.SetId()
-	c.Cache[c.SetId()] = Word{
-		Rus: rus,
-		Eng: eng,
-		Id:  newId,
-	}
-}
-
-func (c *CacheType) FromEngToRus(rus, eng string) {
-	// if ok, v := c.Cache[]; ok {
-	//
-	// }
-}
+// func FromEngToRus(dictionary []WordTranslate) {
+// 	for i := 0; i < len(dictionary); i++ {
+//
+// 	}
+// }
