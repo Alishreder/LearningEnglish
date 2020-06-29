@@ -39,11 +39,23 @@
                 success: function () {
                     document.location.href = "http://localhost:8080/home"
                 },
+                error: function (data) {
+                    alert("err"+data);
+                }
+            })
+        })
+
+        $(".showLearnList").click(function () {
+            $.ajax({
+                url: "/showLearnList",
+                type: "GET",
+                success: function () {
+                    document.location.href = "http://localhost:8080/showLearnList"
+                },
                 error: function () {
                     alert("err");
                 }
             })
-
         })
     })
 })(jQuery);

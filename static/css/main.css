@@ -1,36 +1,17 @@
-.reg_auth {
-    width: 300px;
-    height: 850px;
-
-    margin-left: auto;
-    margin-right: auto;
-    position: relative
-}
-
-.content {
-    background: aliceblue;
-    font-size: 20px;
-    border: 1px solid #000000;
-    padding: 0 30px 30px 30px; /* top right bottom left */
-    margin-left: auto;
-    margin-right: auto;
-    position: absolute;
-    top: 50%;
-    transform: translate(0, -50%)
-}
-
-.reg_auth_form {
-    padding-bottom: 5px;
-    display: block;
-}
-
-/* For table */
+/*********** For table ***********/
 
 table {
     border:1px solid #e0e0e0;
-    width:70%;
-    margin:5% auto 0;
     border-radius:5px;
+    width:70%;
+    margin: 0 auto ;
+}
+
+.tableListToLearn {
+    margin-top: 5%;
+}
+.tableListWords {
+
 }
 
 th, td {
@@ -39,7 +20,7 @@ th, td {
 
 th {
     padding-top:22px;
-    text-shadow: 1px 1px 1px #fff;
+    /*text-shadow: 1px 1px 1px #fff;*/
     background:#e8eaeb;
 }
 
@@ -64,19 +45,83 @@ td.last {
 .btn {
     border: 0;
     border-radius: 3px;
-    font-size: 14px; /* Set a font size */
-    cursor: pointer; /* Mouse pointer on hover */
-    padding: 1px 5px; /* top right bottom left */
-    float:right;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 1px 5px;
     margin-left: 5px;
 }
 
 .deleteWord {
     color: white; /* White text */
-    background-color: darkred; /* Blue background */
+    background-color: darkred;
+    float:right;
 }
 
 .addToLearnList {
     color: white; /* White text */
-    background-color: green; /* Blue background */
+    background-color: green;
+    float:right;
+}
+
+.showLearnList {
+    color: white; /* White text */
+    background-color: green;
+    width:70%;
+    margin: 3px 15%;
+}
+
+.showLearnListParent {
+    margin-top: 5%;
+    margin-bottom: 3px;
+}
+
+.learnWords {
+    color: white; /* White text */
+    background-color: green;
+    width:70%;
+    margin: 3px 15%;
+}
+
+.dictionaryHeading {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/*********** Algorithms ***********/
+
+.navigation {
+    margin-right: 20px;
+    margin-top: 20px;
+    color: white; /* White text */
+    background-color: blue;
+}
+
+.content {
+    width:30%;
+    margin: 5% auto 0;
+}
+
+.first, .second, .third {
+    display: none;
+}
+
+.learnForm {
+    margin-top: 50px;
+}
+
+.algorithmsNumber {
+    text-align: center;
+}
+
+.task {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.inputForLearn {
+    margin-left: 10px;
+    right: 0;
+    width: 100%;
+    border-bottom: 2px solid #adadad;
 }

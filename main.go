@@ -9,11 +9,6 @@ import (
 	"gopkg.in/mgo.v2"
 )
 
-// func addUser() {
-// 	user := User{Login: "lol@gmail.com", Pass: "1"}
-// 	Users[user] = struct{}{}
-// }
-
 func main() {
 	var err error
 	Session, err = mgo.Dial("mongodb://127.0.0.1")
@@ -26,7 +21,6 @@ func main() {
 
 	router := gin.Default()
 	router.GET("/", Default)
-	// addUser()
 
 	router.Static("/static", "./static")
 	router.LoadHTMLGlob("templates/*.html")
@@ -41,9 +35,13 @@ func main() {
 	router.POST("/addNewWord", AddNewWord)
 	router.POST("/deleteWord/:id", DeleteWord)
 	router.POST("/addToLearnList/:id", AddToLearnList)
+	router.GET("/showLearnList", ShowLearnList)
 
+	router.GET("/learn", Learn)
 
-
+	router.POST("/checkFirstAlg", CheckFirstAlg)
+	router.POST("/checkSecondAlg", CheckSecondAlg)
+	router.POST("/checkThirdAlg", CheckThirdAlg)
 
 	err = router.Run(":8080")
 	if err != nil {

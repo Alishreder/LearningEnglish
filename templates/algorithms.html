@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Learning in progress</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/main.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="../static/reg-auth_styles/images/icons/favicon.ico"/>
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="../static/reg-auth_styles/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css"
+          href="../static/reg-auth_styles/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css"
+          href="../static/reg-auth_styles/fonts/iconic/css/material-design-iconic-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="../static/reg-auth_styles/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="../static/reg-auth_styles/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="../static/reg-auth_styles/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="../static/reg-auth_styles/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="../static/reg-auth_styles/vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="../static/reg-auth_styles/css/util.css">
+    <link rel="stylesheet" type="text/css" href="../static/reg-auth_styles/css/main.css">
+    <!--===============================================================================================-->
+</head>
+<body>
+
+<div class="navigationButtons d-flex justify-content-center">
+    <button class="btn navigation" id="first">First</button>
+    <button class="btn navigation" id="second">Second</button>
+    <button class="btn navigation" id="third">Third</button>
+</div>
+
+<div class="content">
+    <div class="first">
+        <h3 class="algorithmsNumber">First step</h3>
+        <br>
+        <div class="task">
+            Translate word from English to Russian language
+        </div>
+        {{range .user.WordsForLearning}}
+            {{if eq .FirstAlgorithm true}}
+                <div class="header" id="first">
+                    <form class="learnForm" id="{{.WordId}}">
+                        <div class="d-flex justify-content-between">
+                            <div class="word">{{.Word}}</div>
+                            <input class="inputForLearn" type="text" name="translate" id="{{.WordId}}">
+                        </div>
+
+                        <div class="container-login100-form-btn">
+                            <div class="wrap-login100-form-btn">
+                                <div class="login100-form-bgbtn"></div>
+                                <button class="login100-form-btn checkFirstAlg" id="{{.WordId}}">
+                                    Confirm
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            {{end}}
+        {{end}}
+    </div>
+
+    <div class="second">
+        <h3 class="algorithmsNumber">Second step</h3>
+        <br>
+        <div class="task">
+            Translate word from Russian to English language
+        </div>
+        {{range .user.WordsForLearning}}
+            {{if eq .SecondAlgorithm true}}
+                <div class="header" id="first">
+                    <form class="learnForm" id="{{.WordId}}">
+                        <div class="d-flex justify-content-between">
+                            <div class="word">{{.Translate}}</div>
+                            <input class="inputForLearn" type="text" name="word" id="{{.WordId}}">
+                        </div>
+
+                        <div class="container-login100-form-btn">
+                            <div class="wrap-login100-form-btn">
+                                <div class="login100-form-bgbtn"></div>
+                                <button class="login100-form-btn checkSecondAlg" id="{{.WordId}}">
+                                    Confirm
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            {{end}}
+        {{end}}
+    </div>
+
+    <div class="third">
+        <h3 class="algorithmsNumber">Third step</h3>
+        <br>
+        <div class="task">
+            Create a sentence with this word
+        </div>
+        {{range .user.WordsForLearning}}
+            {{if eq .ThirdAlgorithm true}}
+                <div class="header" id="first">
+                    <form class="learnForm" id="{{.WordId}}">
+                        <div class="d-flex justify-content-between">
+                            <div class="word">{{.Word}}</div>
+                            <input class="inputForLearn" type="text" name="sentence" id="{{.WordId}}">
+                        </div>
+
+                        <div class="container-login100-form-btn">
+                            <div class="wrap-login100-form-btn">
+                                <div class="login100-form-bgbtn"></div>
+                                <button class="login100-form-btn checkThirdAlg" id="{{.WordId}}">
+                                    Confirm
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            {{end}}
+        {{end}}
+    </div>
+
+    {{/*    {{if eq .algorithm "1"}}*/}}
+    {{/*        <div class="header" id="first">*/}}
+    {{/*            <h3 class="algorithmsNumber">First step</h3>*/}}
+    {{/*            <br>*/}}
+    {{/*            <div class="task">*/}}
+    {{/*                Translate word from English to Russian language*/}}
+    {{/*            </div>*/}}
+    {{/*            <form class="learnForm">*/}}
+    {{/*                <div class="d-flex justify-content-between">*/}}
+    {{/*                    <div class="word">{{.word.Word}}</div>*/}}
+    {{/*                    <input class="inputForLearn" type="text" name="translate">*/}}
+    {{/*                </div>*/}}
+
+    {{/*                <div class="container-login100-form-btn">*/}}
+    {{/*                    <div class="wrap-login100-form-btn">*/}}
+    {{/*                        <div class="login100-form-bgbtn"></div>*/}}
+    {{/*                        <button class="login100-form-btn addWord">*/}}
+    {{/*                            Confirm*/}}
+    {{/*                        </button>*/}}
+    {{/*                    </div>*/}}
+    {{/*                </div>*/}}
+    {{/*            </form>*/}}
+    {{/*        </div>*/}}
+    {{/*        {{else}}*/}}
+    {{/*            {{if eq .algorithm "2"}}*/}}
+    {{/*                <div class="header" id="second">*/}}
+    {{/*                    <h3>Second step</h3>*/}}
+    {{/*                    <br>*/}}
+    {{/*                    <div class="task">*/}}
+    {{/*                        Translate word from Russian to English language*/}}
+    {{/*                        {{.word}}*/}}
+    {{/*                    </div>*/}}
+    {{/*                </div>*/}}
+    {{/*            {{else}}*/}}
+    {{/*                {{if eq .algorithm "3"}}*/}}
+    {{/*                    <div class="header" id="third">*/}}
+    {{/*                        <h3>Third step</h3>*/}}
+    {{/*                        <br>*/}}
+    {{/*                        <div class="task">*/}}
+    {{/*                            Create a sentence with this word*/}}
+    {{/*                            {{.word}}*/}}
+
+    {{/*                        </div>*/}}
+    {{/*                    </div>*/}}
+    {{/*                */}}{{/*    {{else if eq .algorithm "4"}}*/}}
+    {{/*                */}}{{/*    <div class="header" id="fourth">*/}}
+    {{/*                */}}{{/*        <h3>Fourth step</h3>*/}}
+    {{/*                */}}{{/*        <br>*/}}
+    {{/*                */}}{{/*        <div class="task">*/}}
+    {{/*                */}}{{/*            Translate word from English to Russian language*/}}
+    {{/*                */}}{{/*        </div>*/}}
+    {{/*                */}}{{/*    </div>*/}}
+    {{/*            {{end}}*/}}
+    {{/*        {{end}}*/}}
+    {{/*    {{end}}*/}}
+
+</div>
+
+<div id="dropDownSelect1"></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!--===============================================================================================-->
+<script src="../static/js/algorithms.js"></script>
+<!--===============================================================================================-->
+<script src="../static/reg-auth_styles/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+<script src="../static/reg-auth_styles/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+<script src="../static/reg-auth_styles/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+<script src="../static/reg-auth_styles/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+<script src="../static/reg-auth_styles/vendor/daterangepicker/moment.min.js"></script>
+<script src="../static/reg-auth_styles/vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+<script src="../static/reg-auth_styles/vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+<script src="../static/reg-auth_styles/js/main.js"></script>
+<!--===============================================================================================-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!--===============================================================================================-->
+
+</body>
+</html>

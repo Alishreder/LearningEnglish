@@ -9,29 +9,70 @@ import (
 )
 
 func AddNewWord(c *gin.Context) {
+	user, err := GetUserFromBD(c)
+	if err != nil {
+		panic(err)
+	}
+	userId, err := GetUserId(c)
+	if err != nil {
+		panic(err)
+	}
+
 	word := c.PostForm("word")
 	translate := c.PostForm("translate")
 	if word != "" || translate != "" {
-		id := CurrentUser.LastWordId + 1
-		CurrentUser.LastWordId++
-		CurrentUser.Dictionary = append(CurrentUser.Dictionary, WordTranslate{Word: word, Translate: translate, WordId: id, WantToLearn: true})
-		err := Collection.Update(Obj{"_id": CurrId}, CurrentUser)
+		id := user.LastWordId + 1
+		user.LastWordId++
+		user.DictionarySize++
+
+		user.Dictionary = append(user.Dictionary, WordTranslate{
+			Word:            word,
+			Translate:       translate,
+			WordId:          id,
+			FirstAlgorithm:  true,
+			SecondAlgorithm: true,
+			ThirdAlgorithm:  true,
+			// FourthAlgorithm: true,
+		})
+		user.WordsForLearning = append(user.WordsForLearning, WordTranslate{
+			Word:            word,
+			Translate:       translate,
+			WordId:          id,
+			FirstAlgorithm:  true,
+			SecondAlgorithm: true,
+			ThirdAlgorithm:  true,
+			// FourthAlgorithm: true,
+		})
+		err = Collection.Update(Obj{"_id": userId}, user)
 		if err != nil {
 			c.String(http.StatusInternalServerError, "AddNewWord: fail while trying to add new word to dictionary: ", err)
 		}
-		fmt.Println(CurrentUser, CurrId)
 	}
 
 	c.Status(http.StatusOK)
 }
 
 func DeleteWord(c *gin.Context) {
+	user, err := GetUserFromBD(c)
+	if err != nil {
+		panic(err)
+	}
+	userId, err := GetUserId(c)
+	if err != nil {
+		panic(err)
+	}
+
 	idInt, _ := strconv.Atoi(c.Param("id"))
 	idToDelete := uint64(idInt)
-	for i, v := range CurrentUser.Dictionary {
+	for i, v := range user.Dictionary {
 		if v.WordId == idToDelete {
-			CurrentUser.Dictionary = append(CurrentUser.Dictionary[:i], CurrentUser.Dictionary[i+1:]...)
-			err := Collection.Update(Obj{"_id": CurrId}, CurrentUser)
+			user.Dictionary = append(user.Dictionary[:i], user.Dictionary[i+1:]...)
+			for j, val := range user.WordsForLearning {
+				if v.WordId == val.WordId {
+					user.WordsForLearning = append(user.WordsForLearning[:j], user.WordsForLearning[j+1:]...)
+				}
+			}
+			err = Collection.Update(Obj{"_id": userId}, user)
 			if err != nil {
 				c.String(http.StatusInternalServerError, "DeleteWord: fail while trying to delete word: ", err)
 			}
@@ -42,41 +83,190 @@ func DeleteWord(c *gin.Context) {
 }
 
 func AddToLearnList(c *gin.Context) {
-	idInt, _ := strconv.Atoi(c.Param("id"))
-	idToLearn := uint64(idInt)
-	for i, v := range CurrentUser.Dictionary {
-		if v.WordId == idToLearn {
-			CurrentUser.Dictionary[i].WantToLearn = true
-		}
+	user, err := GetUserFromBD(c)
+	if err != nil {
+		panic(err)
+	}
+	userId, err := GetUserId(c)
+	if err != nil {
+		panic(err)
 	}
 
+	idInt, _ := strconv.Atoi(c.Param("id"))
+	idToLearn := uint64(idInt)
+
+	if len(user.WordsForLearning) > 0 {
+		index := GetWordIndex(idToLearn, user.Dictionary)
+		word := user.Dictionary[index]
+		word.FirstAlgorithm = true
+		word.SecondAlgorithm = true
+		word.ThirdAlgorithm = true
+		if user.Dictionary[index] != user.WordsForLearning[GetWordIndex(idToLearn, user.WordsForLearning)] {
+			user.WordsForLearning = append(user.WordsForLearning, word)
+		}
+	} else {
+		index := GetWordIndex(idToLearn, user.Dictionary)
+		word := user.Dictionary[index]
+		word.FirstAlgorithm = true
+		word.SecondAlgorithm = true
+		word.ThirdAlgorithm = true
+		user.WordsForLearning = append(user.WordsForLearning, word)
+	}
+	err = Collection.Update(Obj{"_id": userId}, user)
+	if err != nil {
+		c.String(http.StatusInternalServerError, "AddToLearnList: fail while trying to add word to learn list: ", err)
+	}
 	c.Status(http.StatusOK)
 }
 
-// func Learn(c *gin.Context) {
-// 	CurrentUser
-// }
+func ShowLearnList(c *gin.Context) {
+	user, err := GetUserFromBD(c)
+	if err != nil {
+		panic(err)
+	}
 
-
-/*
-
-It was in main
-
-var MyCache = CacheType{
-	Cache: make(map[uint64]Word),
-}
-MyCache.AddWordToCache("слово", "word")
-MyCache.AddWordToCache("имя", "name")
-MyCache.AddWordToCache("фамилия", "surname")
-
-for _, v := range MyCache.Cache {
-fmt.Printf("%+v\n", v)
+	c.HTML(http.StatusOK, "LearnList.html", Obj{
+		"list": user.WordsForLearning,
+	})
+	token, err := c.Cookie("token")
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(token)
 }
 
-*/
+func Learn(c *gin.Context) {
+	user, err := GetUserFromBD(c)
+	if err != nil {
+		panic(err)
+	}
 
-// func FromEngToRus(dictionary []WordTranslate) {
-// 	for i := 0; i < len(dictionary); i++ {
-//
-// 	}
-// }
+	c.HTML(http.StatusOK, "algorithms.html", Obj{
+		"user": user,
+	})
+}
+
+func GetWordIndex(id uint64, dictionary []WordTranslate) (index int) {
+	for i, v := range dictionary {
+		if v.WordId == id {
+			return i
+		}
+	}
+	return
+}
+
+func CheckFirstAlg(c *gin.Context) {
+	user, err := GetUserFromBD(c)
+	if err != nil {
+		panic(err)
+	}
+	userId, err := GetUserId(c)
+	if err != nil {
+		panic(err)
+	}
+
+	idInt, _ := strconv.Atoi(c.PostForm("id"))
+	id := uint64(idInt)
+	translate := c.PostForm("translate")
+
+	userTry := User{}
+	count, err := Collection.Find(Obj{"_id": userId, "dictionary.word_id": id}).Count()
+	if err != nil {
+		panic(err)
+	}
+	if count > 0 {
+		_ = Collection.Find(Obj{"_id": userId, "dictionary.word_id": id}).One(&userTry)
+		if user.Dictionary[GetWordIndex(id, userTry.Dictionary)].Translate == translate {
+			c.Status(http.StatusOK)
+			user.Dictionary[GetWordIndex(id, userTry.Dictionary)].FirstAlgorithm = false
+			user.WordsForLearning[GetWordIndex(id, userTry.WordsForLearning)].FirstAlgorithm = false
+
+			err := Collection.Update(Obj{"_id": userId}, user)
+			if err != nil {
+				c.String(http.StatusInternalServerError, "CheckFirstAlg: fail while trying to update words parameters: ", err)
+			}
+		} else {
+			c.Status(http.StatusBadRequest)
+		}
+	}
+	// c.Status(http.StatusOK)
+}
+
+func CheckSecondAlg(c *gin.Context) {
+	user, err := GetUserFromBD(c)
+	if err != nil {
+		panic(err)
+	}
+	userId, err := GetUserId(c)
+	if err != nil {
+		panic(err)
+	}
+
+	idInt, _ := strconv.Atoi(c.PostForm("id"))
+	id := uint64(idInt)
+	word := c.PostForm("word")
+
+	userTry := User{}
+	count, err := Collection.Find(Obj{"_id": userId, "dictionary.word_id": id}).Count()
+	if err != nil {
+		panic(err)
+	}
+	if count > 0 {
+		_ = Collection.Find(Obj{"_id": userId, "dictionary.word_id": id}).One(&userTry)
+		if userTry.Dictionary[GetWordIndex(id, userTry.Dictionary)].Word == word {
+			c.Status(http.StatusOK)
+			user.Dictionary[GetWordIndex(id, userTry.Dictionary)].SecondAlgorithm = false
+			user.WordsForLearning[GetWordIndex(id, userTry.WordsForLearning)].SecondAlgorithm = false
+
+			err := Collection.Update(Obj{"_id": userId}, user)
+			if err != nil {
+				c.String(http.StatusInternalServerError, "CheckSecondAlg: fail while trying to update words parameters: ", err)
+			}
+		} else {
+			c.Status(http.StatusBadRequest)
+		}
+	}
+	c.Status(http.StatusOK)
+}
+
+func CheckThirdAlg(c *gin.Context) {
+	user, err := GetUserFromBD(c)
+	if err != nil {
+		panic(err)
+	}
+	userId, err := GetUserId(c)
+	if err != nil {
+		panic(err)
+	}
+
+	idInt, _ := strconv.Atoi(c.PostForm("id"))
+	id := uint64(idInt)
+	sentence := c.PostForm("sentence")
+
+	userTry := User{}
+	count, err := Collection.Find(Obj{"_id": userId, "dictionary.word_id": id}).Count()
+	if err != nil {
+		panic(err)
+	}
+	if count > 0 {
+		_ = Collection.Find(Obj{"_id": userId, "dictionary.word_id": id}).One(&userTry)
+		if sentence != "" {
+			c.Status(http.StatusOK)
+			user.Dictionary[GetWordIndex(id, userTry.Dictionary)].ThirdAlgorithm = false
+			index := GetWordIndex(id, userTry.WordsForLearning)
+			user.WordsForLearning[index].ThirdAlgorithm = false
+			word := user.WordsForLearning[GetWordIndex(id, userTry.WordsForLearning)]
+			if !word.FirstAlgorithm && !word.SecondAlgorithm && !word.ThirdAlgorithm {
+				user.WordsForLearning = append(user.WordsForLearning[:index], user.WordsForLearning[index+1:]...)
+			}
+
+			err := Collection.Update(Obj{"_id": userId}, user)
+			if err != nil {
+				c.String(http.StatusInternalServerError, "CheckThirdAlg: fail while trying to update words parameters: ", err)
+			}
+		} else {
+			c.Status(http.StatusBadRequest)
+		}
+	}
+	// c.Status(http.StatusOK)
+}

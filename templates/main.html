@@ -4,19 +4,18 @@
     <meta charset="UTF-8">
     <title>Learning English</title>
     <link rel="stylesheet" type="text/css" href="../static/css/main.css">
+    <!--===============================================================================================-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="../static/reg-auth_styles/js/main.js"></script>
-    <script src="../static/js/main.js"></script>
-
     <!--===============================================================================================-->
     <link rel="icon" type="image/png" href="../static/reg-auth_styles/images/icons/favicon.ico"/>
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="../static/reg-auth_styles/vendor/bootstrap/css/bootstrap.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="../static/reg-auth_styles/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="../static/reg-auth_styles/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="../static/reg-auth_styles/fonts/iconic/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="../static/reg-auth_styles/fonts/iconic/css/material-design-iconic-font.min.css">
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="../static/reg-auth_styles/vendor/animate/animate.css">
     <!--===============================================================================================-->
@@ -33,25 +32,27 @@
     <!--===============================================================================================-->
 </head>
 <body>
-{{.User.Email}}
-<table>
-    <tr>
-        <th>Word</th>
-        <th>Translate</th>
-    </tr>
-    {{range .User.Dictionary}}
+<div class="showLearnListParent">
+    <button class="btn showLearnList">My dictionary</button>
+</div>
+<div class="tableListWords">
+    <table>
         <tr>
-            <td>{{.Word}}</td>
-            <td>
-                {{.Translate}}
-                <button class="btn deleteWord"id="{{.WordId}}"><i class="fa fa-trash"></i></button>
-                <button class="btn addToLearnList" action="/addToLearnList"  id="{{.WordId}}">Learn</button>
-            </td>
-            {{.WantToLearn}}
+            <th>Word</th>
+            <th>Translate</th>
         </tr>
-    {{end}}
-</table>
-
+        {{range .User.Dictionary}}
+            <tr>
+                <td>{{.Word}}</td>
+                <td>
+                    {{.Translate}}
+                    <button class="btn deleteWord" id="{{.WordId}}"><i class="fa fa-trash"></i></button>
+                    <button class="btn addToLearnList" id="{{.WordId}}">Learn</button>
+                </td>
+            </tr>
+        {{end}}
+    </table>
+</div>
 <div class="limiter">
     <div class="container-login100">
         <div class="wrap-login100">
@@ -93,7 +94,6 @@
 <!--===============================================================================================-->
 <script src="../static/reg-auth_styles/vendor/animsition/js/animsition.min.js"></script>
 <!--===============================================================================================-->
-<script src="../static/reg-auth_styles/vendor/bootstrap/js/popper.js"></script>
 <script src="../static/reg-auth_styles/vendor/bootstrap/js/bootstrap.min.js"></script>
 <!--===============================================================================================-->
 <script src="../static/reg-auth_styles/vendor/select2/select2.min.js"></script>
@@ -104,5 +104,9 @@
 <script src="../static/reg-auth_styles/vendor/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
 <script src="../static/reg-auth_styles/js/main.js"></script>
+<!--===============================================================================================-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!--===============================================================================================-->
+<script src="../static/js/main.js"></script>
 </body>
 </html>
