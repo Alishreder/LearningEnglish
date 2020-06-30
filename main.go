@@ -5,9 +5,18 @@ import (
 	. "dictionaryProject/data"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	ai "github.com/night-codes/mgo-ai"
 	"gopkg.in/mgo.v2"
+	"log"
 )
+
+func init() {
+	// loads values from .env into the system
+	if err := godotenv.Load(); err != nil {
+		log.Print("No .env file found")
+	}
+}
 
 func main() {
 	var err error
@@ -33,7 +42,7 @@ func main() {
 	router.GET("/home", Home)
 
 	router.POST("/addNewWord", AddNewWord)
-	router.POST("/deleteWord/:id", DeleteWord)
+	router.POST("/deleteWord", DeleteWord)
 	router.POST("/addToLearnList/:id", AddToLearnList)
 	router.GET("/showLearnList", ShowLearnList)
 
@@ -42,6 +51,10 @@ func main() {
 	router.POST("/checkFirstAlg", CheckFirstAlg)
 	router.POST("/checkSecondAlg", CheckSecondAlg)
 	router.POST("/checkThirdAlg", CheckThirdAlg)
+
+	router.GET("/showUsersList", ShowUsersList)
+	router.GET("/showUsersDictionary", ShowUsersDictionary)
+
 
 	err = router.Run(":8080")
 	if err != nil {

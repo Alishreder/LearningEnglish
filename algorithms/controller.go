@@ -8,6 +8,7 @@ import (
 	ai "github.com/night-codes/mgo-ai"
 	"log"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -18,8 +19,6 @@ func createToken(authData User) string {
 		return err.Error()
 	}
 
-	Tokens[jwtToken] = authData
-
 	return jwtToken
 }
 
@@ -29,7 +28,9 @@ func generateToken(id uint64) (token string, err error) {
 		StandardClaims: jwt.StandardClaims{ExpiresAt: time.Now().Add(time.Hour * 24 * 7).Unix()},
 	})
 
-	token, err = at.SignedString([]byte(SecretWord))
+	secretWord, _ := os.LookupEnv("SECRET_WORD")
+
+	token, err = at.SignedString([]byte(secretWord))
 	if err != nil {
 		return "", err
 	}

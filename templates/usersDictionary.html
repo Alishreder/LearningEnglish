@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Words to learn</title>
+    <title>Users Dictionary</title>
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="../static/css/main.css">
     <!--===============================================================================================-->
@@ -10,36 +10,29 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="../static/reg-auth_styles/css/main.css">
     <!--===============================================================================================-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
 </head>
 <body>
-<div class="tableListToLearn">
-    <h3 class="dictionaryHeading">Dictionary</h3>
+<div class="showLearnListParent">
+    <button class="btn showLearnList">{{.user.Email}} dictionary</button>
+</div>
+<div class="tableListWords">
     <table>
         <tr>
             <th>Word</th>
             <th>Translate</th>
         </tr>
-        {{range .list}}
-            {{if .Word}}
-                <tr>
-                    <td>{{.Word}}</td>
-                    <td>
-                        {{.Translate}}
-                    </td>
-                </tr>
-            {{end}}
+        {{range .user.Dictionary}}
+            <tr>
+                <td>{{.Word}}</td>
+                <td>
+                    {{.Translate}}
+                </td>
+            </tr>
         {{end}}
     </table>
-    <div class="btn_parent">
-        <button class="btn learnWords">Learn words</button>
-    </div>
 </div>
-
-<!--===============================================================================================-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<!--===============================================================================================-->
-<script src="../static/js/algorithms.js"></script>
-<!--===============================================================================================-->
 
 </body>
 </html>

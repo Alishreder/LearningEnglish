@@ -3,13 +3,7 @@ package data
 import (
 	"github.com/dgrijalva/jwt-go"
 	"gopkg.in/mgo.v2"
-	"sync"
 )
-
-var TokensLock sync.Mutex
-var Tokens = map[string]User{}
-
-const SecretWord = "letsgo"
 
 type Obj map[string]interface{}
 
@@ -29,13 +23,8 @@ type User struct {
 	Email            string          `json:"login" bson:"login"`
 	Pass             string          `json:"pass" bson:"pass"`
 	Dictionary       []WordTranslate `json:"dictionary" bson:"dictionary"`
-	DictionarySize   uint64          `json:"dictionary_size" bson:"dictionary_size"`
 	WordsForLearning []WordTranslate `json:"words_for_learning" bson:"words_for_learning"`
 	LastWordId       uint64          `json:"last_word_id" bson:"last_word_id"`
-}
-
-type TokenStruct struct {
-	Token string `json:"token" binding:"required"`
 }
 
 type AccessTokenClaims struct {

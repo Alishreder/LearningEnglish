@@ -1,45 +1,41 @@
 /*********** For table ***********/
 
 table {
-    border:1px solid #e0e0e0;
-    border-radius:5px;
-    width:70%;
-    margin: 0 auto ;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    width: 70%;
+    margin: 0 auto;
 }
 
-.tableListToLearn {
+.tableListToLearn, .tableUsers {
     margin-top: 5%;
-}
-.tableListWords {
-
 }
 
 th, td {
-    padding:18px 28px 18px;
+    padding: 18px 28px 18px;
 }
 
 th {
-    padding-top:22px;
-    /*text-shadow: 1px 1px 1px #fff;*/
-    background:#e8eaeb;
+    padding-top: 22px;
+    background: #e8eaeb;
 }
 
 td {
-    border-top:1px solid #e0e0e0;
-    border-right:1px solid #e0e0e0;
+    border-top: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
     padding-top: 5px;
 }
 
 tr.odd-row td {
-    background:#f6f6f6;
+    background: #f6f6f6;
 }
 
 td.first, th.first {
-    text-align:left
+    text-align: left
 }
 
 td.last {
-    border-right:none;
+    border-right: none;
 }
 
 .btn {
@@ -52,21 +48,21 @@ td.last {
 }
 
 .deleteWord {
-    color: white; /* White text */
+    color: white;
     background-color: darkred;
-    float:right;
+    float: right;
 }
 
 .addToLearnList {
-    color: white; /* White text */
+    color: white;
     background-color: green;
-    float:right;
+    float: right;
 }
 
 .showLearnList {
-    color: white; /* White text */
+    color: white;
     background-color: green;
-    width:70%;
+    width: 70%;
     margin: 3px 15%;
 }
 
@@ -76,9 +72,9 @@ td.last {
 }
 
 .learnWords {
-    color: white; /* White text */
+    color: white;
     background-color: green;
-    width:70%;
+    width: 70%;
     margin: 3px 15%;
 }
 
@@ -92,12 +88,12 @@ td.last {
 .navigation {
     margin-right: 20px;
     margin-top: 20px;
-    color: white; /* White text */
+    color: white;
     background-color: blue;
 }
 
 .content {
-    width:30%;
+    width: 30%;
     margin: 5% auto 0;
 }
 
@@ -124,4 +120,12 @@ td.last {
     right: 0;
     width: 100%;
     border-bottom: 2px solid #adadad;
+}
+
+/*********** Admin ***********/
+
+.showUsersDictionary {
+    color: white;
+    background-color: green;
+    float: right;
 }

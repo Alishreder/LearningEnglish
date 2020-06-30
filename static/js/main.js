@@ -20,10 +20,11 @@
         $(".deleteWord").click(function () {
             const id = $(this).attr("id")
             $.ajax({
-                url: "/deleteWord/" + id,
+                url: "/deleteWord",
                 type: "POST",
+                data: {id: id},
                 success: function () {
-                    document.location.href = "http://localhost:8080/home"
+                    location.reload()
                 },
                 error: function () {
                     alert("err");
@@ -37,7 +38,7 @@
                 url: "/addToLearnList/" + id,
                 type: "POST",
                 success: function () {
-                    document.location.href = "http://localhost:8080/home"
+                    location.reload()
                 },
                 error: function (data) {
                     alert("err"+data);
@@ -51,6 +52,20 @@
                 type: "GET",
                 success: function () {
                     document.location.href = "http://localhost:8080/showLearnList"
+                },
+                error: function () {
+                    alert("err");
+                }
+            })
+        })
+
+        $(".showUsersDictionary").click(function () {
+            let id = $(this).attr("id")
+            $.ajax({
+                url: "/showUsersDictionary?id="+id,
+                type: "GET",
+                success: function () {
+                    document.location.href = "http://localhost:8080/showUsersDictionary?id="+id
                 },
                 error: function () {
                     alert("err");

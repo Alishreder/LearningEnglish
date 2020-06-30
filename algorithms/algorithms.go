@@ -2,9 +2,9 @@ package algorithms
 
 import (
 	. "dictionaryProject/data"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"os"
 	"strconv"
 )
 
@@ -23,7 +23,6 @@ func AddNewWord(c *gin.Context) {
 	if word != "" || translate != "" {
 		id := user.LastWordId + 1
 		user.LastWordId++
-		user.DictionarySize++
 
 		user.Dictionary = append(user.Dictionary, WordTranslate{
 			Word:            word,
@@ -62,7 +61,7 @@ func DeleteWord(c *gin.Context) {
 		panic(err)
 	}
 
-	idInt, _ := strconv.Atoi(c.Param("id"))
+	idInt, _ := strconv.Atoi(c.PostForm("id"))
 	idToDelete := uint64(idInt)
 	for i, v := range user.Dictionary {
 		if v.WordId == idToDelete {
@@ -128,11 +127,6 @@ func ShowLearnList(c *gin.Context) {
 	c.HTML(http.StatusOK, "LearnList.html", Obj{
 		"list": user.WordsForLearning,
 	})
-	token, err := c.Cookie("token")
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println(token)
 }
 
 func Learn(c *gin.Context) {
@@ -269,4 +263,58 @@ func CheckThirdAlg(c *gin.Context) {
 		}
 	}
 	// c.Status(http.StatusOK)
+}
+
+func IsAdmin(user User) bool {
+
+	adminPass, _ := os.LookupEnv("ADMIN_PASSWORD")
+	adminEmail, _ := os.LookupEnv("ADMIN_EMAIL")
+	if user.Pass == adminPass &&
+		user.Email == adminEmail {
+		return true
+	}
+
+	return false
+}
+
+func GetAllUsersFromBD() (users []User, err error) {
+	err = Collection.Find(Obj{}).All(&users)
+	users = append(users[1:])
+	return users, err
+}
+
+func ShowUsersList(c *gin.Context) {
+	user, err := GetUserFromBD(c)
+	if err != nil {
+		panic(err)
+	}
+	if IsAdmin(user) {
+		users, err := GetAllUsersFromBD()
+		if err != nil {
+			c.Status(http.StatusNotFound)
+		} else {
+			c.HTML(http.StatusOK, "usersList.html", Obj{
+				"users": users,
+			})
+		}
+	}
+}
+
+func ShowUsersDictionary(c *gin.Context) {
+	idInt, _ := strconv.Atoi(c.Query("id"))
+	id := uint64(idInt)
+	user := User{}
+	count, err := Collection.Find(Obj{"_id": id}).Count()
+	if err != nil {
+		panic(err)
+	}
+	if count > 0 {
+		_ = Collection.Find(Obj{"_id": id}).One(&user)
+		c.HTML(http.StatusOK, "usersDictionary.html", Obj{
+			"user": user,
+		})
+	} else {
+		c.Status(http.StatusBadRequest)
+	}
+
 }
