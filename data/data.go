@@ -14,8 +14,8 @@ type WordTranslate struct {
 	FirstAlgorithm  bool   `json:"first_algorithm" bson:"first_algorithm"`
 	SecondAlgorithm bool   `json:"second_algorithm" bson:"second_algorithm"`
 	ThirdAlgorithm  bool   `json:"third_algorithm" bson:"third_algorithm"`
+	WantToLearn     bool   `json:"want_to_learn" bson:"want_to_learn"`
 	// FourthAlgorithm bool            `json:"fourth_algorithm" bson:"fourth_algorithm"`
-
 }
 
 type User struct {
@@ -25,6 +25,7 @@ type User struct {
 	Dictionary       []WordTranslate `json:"dictionary" bson:"dictionary"`
 	WordsForLearning []WordTranslate `json:"words_for_learning" bson:"words_for_learning"`
 	LastWordId       uint64          `json:"last_word_id" bson:"last_word_id"`
+	IsAdmin          bool            `json:"is_admin" bson:"is_admin"`
 }
 
 type AccessTokenClaims struct {

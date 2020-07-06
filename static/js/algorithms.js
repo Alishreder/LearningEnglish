@@ -2,10 +2,10 @@
     $(document).ready(function () {
         $(".learnWords").click(function () {
             $.ajax({
-                url: "/learn",
+                url: "/home/learn",
                 type: "GET",
                 success: function () {
-                    document.location.href = "http://localhost:8080/learn";
+                    document.location.href = "http://localhost:8080/home/learn";
                 },
                 error: function () {
                     alert("err");
@@ -17,7 +17,7 @@
             const id = $(this).attr("id");
             let translate = $("#"+id).serializeArray()[0].value;
             $.ajax({
-                url: "/checkFirstAlg",
+                url: "/home/checkFirstAlg",
                 data: {id: id, translate: translate},
                 type: "POST",
                 success: function () {
@@ -33,7 +33,7 @@
             const id = $(this).attr("id");
             let word = $("#"+id).serializeArray()[0].value;
             $.ajax({
-                url: "/checkSecondAlg",
+                url: "/home/checkSecondAlg",
                 data: {id: id, word: word},
                 type: "POST",
                 success: function () {
@@ -49,7 +49,7 @@
             const id = $(this).attr("id");
             let sentence = $("#"+id).serializeArray()[0].value;
             $.ajax({
-                url: "/checkThirdAlg",
+                url: "/home/checkThirdAlg",
                 data: {id: id, sentence: sentence},
                 type: "POST",
                 success: function () {

@@ -2,7 +2,7 @@
     $(document).ready(function () {
         $(".addWord").click(function () {
             $.ajax({
-                url: "/addNewWord",
+                url: "/home/addNewWord",
                 type: "POST",
                 success: function () {
                     document.location.href = "http://localhost:8080/home";
@@ -20,7 +20,7 @@
         $(".deleteWord").click(function () {
             const id = $(this).attr("id");
             $.ajax({
-                url: "/deleteWord",
+                url: "/home/deleteWord",
                 type: "POST",
                 data: {id: id},
                 success: function () {
@@ -35,7 +35,7 @@
         $(".addToLearnList").click(function () {
             const id = $(this).attr("id");
             $.ajax({
-                url: "/addToLearnList/" + id,
+                url: "/home/addToLearnList/" + id,
                 type: "POST",
                 success: function () {
                     location.reload();
@@ -46,12 +46,38 @@
             });
         });
 
-        $(".showLearnList").click(function () {
+        $("#showLearnList").click(function () {
             $.ajax({
-                url: "/showLearnList",
+                url: "/home/showLearnList",
                 type: "GET",
                 success: function () {
-                    document.location.href = "http://localhost:8080/showLearnList";
+                    document.location.href = "http://localhost:8080/home/showLearnList";
+                },
+                error: function () {
+                    alert("err");
+                }
+            });
+        });
+
+        $("#showHomePage").click(function () {
+            $.ajax({
+                url: "/home",
+                type: "GET",
+                success: function () {
+                    document.location.href = "http://localhost:8080/home";
+                },
+                error: function () {
+                    alert("err");
+                }
+            });
+        });
+
+        $("#showListOfUsers").click(function () {
+            $.ajax({
+                url: "/showUsersList",
+                type: "GET",
+                success: function () {
+                    document.location.href = "http://localhost:8080/showUsersList";
                 },
                 error: function () {
                     alert("err");
@@ -62,10 +88,10 @@
         $(".showUsersDictionary").click(function () {
             let id = $(this).attr("id");
             $.ajax({
-                url: "/showUsersDictionary?id="+id,
+                url: "/home/showUsersDictionary?id="+id,
                 type: "GET",
                 success: function () {
-                    document.location.href = "http://localhost:8080/showUsersDictionary?id="+id;
+                    document.location.href = "http://localhost:8080/home/showUsersDictionary?id="+id;
                 },
                 error: function () {
                     alert("err");

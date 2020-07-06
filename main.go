@@ -40,20 +40,20 @@ func main() {
 	router.POST("/authorization", AuthorizationPost)
 
 	router.GET("/home", Home)
+	group := router.Group("/home")
+	group.POST("/addNewWord", AddNewWord)
+	group.POST("/deleteWord", DeleteWord)
+	group.POST("/addToLearnList/:id", AddToLearnList)
+	group.GET("/showLearnList", ShowLearnList)
 
-	router.POST("/addNewWord", AddNewWord)
-	router.POST("/deleteWord", DeleteWord)
-	router.POST("/addToLearnList/:id", AddToLearnList)
-	router.GET("/showLearnList", ShowLearnList)
+	group.GET("/learn", Learn)
 
-	router.GET("/learn", Learn)
-
-	router.POST("/checkFirstAlg", CheckFirstAlg)
-	router.POST("/checkSecondAlg", CheckSecondAlg)
-	router.POST("/checkThirdAlg", CheckThirdAlg)
+	group.POST("/checkFirstAlg", CheckFirstAlg)
+	group.POST("/checkSecondAlg", CheckSecondAlg)
+	group.POST("/checkThirdAlg", CheckThirdAlg)
 
 	router.GET("/showUsersList", ShowUsersList)
-	router.GET("/showUsersDictionary", ShowUsersDictionary)
+	group.GET("/showUsersDictionary", ShowUsersDictionary)
 
 
 	err = router.Run(":8080")

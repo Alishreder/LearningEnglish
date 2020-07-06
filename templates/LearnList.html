@@ -12,14 +12,48 @@
     <!--===============================================================================================-->
 </head>
 <body>
+
+<header>
+    <div class="container header-content">
+        <div class="row">
+            <div class="col-lg-5">
+                LEARNING ENGLISH
+            </div>
+            <div class="col-lg-7 ml-auto">
+                <nav>
+                    <ul class="d-flex justify-content-between">
+                        <li class="menu__item">
+                            <button class="header-btn" id="showHomePage">
+                                Home page
+                            </button>
+                        </li>
+                        <li class="menu__item">
+                            <button class="header-btn" id="showLearnList">
+                                Learn list
+                            </button>
+                        </li>
+                        {{if .user.IsAdmin}}
+                            <li class="menu__item">
+                                <button class="header-btn" id="showListOfUsers">
+                                    List of users
+                                </button>
+                            </li>
+                        {{end}}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
 <div class="tableListToLearn">
-    <h3 class="dictionaryHeading">Dictionary</h3>
+    <h3 class="dictionaryHeading">Learn list</h3>
     <table>
         <tr>
             <th>Word</th>
             <th>Translate</th>
         </tr>
-        {{range .list}}
+        {{range .user.WordsForLearning}}
             {{if .Word}}
                 <tr>
                     <td>{{.Word}}</td>
@@ -39,6 +73,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!--===============================================================================================-->
 <script src="../static/js/algorithms.js"></script>
+<!--===============================================================================================-->
+<script src="../static/js/main.js"></script>
 <!--===============================================================================================-->
 
 </body>
