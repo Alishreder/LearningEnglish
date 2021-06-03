@@ -4,7 +4,6 @@ import (
 	. "LearningEnglish/data"
 	"fmt"
 	"net/http"
-	"os"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -54,15 +53,7 @@ func Home(c *gin.Context) {
 }
 
 func IsAdmin(user User) bool {
-
-	adminPass, _ := os.LookupEnv("ADMIN_PASSWORD")
-	adminEmail, _ := os.LookupEnv("ADMIN_EMAIL")
-	if user.Pass == adminPass &&
-		user.Email == adminEmail {
-		return true
-	}
-
-	return false
+	return user.IsAdmin
 }
 
 func GetAllUsersFromBD() (users []User, err error) {
