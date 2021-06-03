@@ -1,11 +1,13 @@
 (function ($) {
     $(document).ready(function () {
+        const domain = (new URL(window.location.href)).origin;
+
         $(".addWord").click(function () {
             $.ajax({
                 url: "/home/addNewWord",
                 type: "POST",
                 success: function () {
-                    document.location.href = "http://localhost:8080/home";
+                    document.location.href = domain + "/home";
                 },
                 error: function () {
                     alert("error");
@@ -41,7 +43,7 @@
                     location.reload();
                 },
                 error: function (data) {
-                    alert("err"+data);
+                    alert("err" + data);
                 }
             });
         });
@@ -51,7 +53,7 @@
                 url: "/home/showLearnList",
                 type: "GET",
                 success: function () {
-                    document.location.href = "http://localhost:8080/home/showLearnList";
+                    document.location.href = domain + "/home/showLearnList";
                 },
                 error: function () {
                     alert("err");
@@ -64,7 +66,7 @@
                 url: "/home",
                 type: "GET",
                 success: function () {
-                    document.location.href = "http://localhost:8080/home";
+                    document.location.href = domain + "/home";
                 },
                 error: function () {
                     alert("err");
@@ -77,7 +79,7 @@
                 url: "/showUsersList",
                 type: "GET",
                 success: function () {
-                    document.location.href = "http://localhost:8080/showUsersList";
+                    document.location.href = domain + "/showUsersList";
                 },
                 error: function () {
                     alert("err");
@@ -88,10 +90,10 @@
         $(".showUsersDictionary").click(function () {
             let id = $(this).attr("id");
             $.ajax({
-                url: "/home/showUsersDictionary?id="+id,
+                url: "/home/showUsersDictionary?id=" + id,
                 type: "GET",
                 success: function () {
-                    document.location.href = "http://localhost:8080/home/showUsersDictionary?id="+id;
+                    document.location.href = domain + "/home/showUsersDictionary?id=" + id;
                 },
                 error: function () {
                     alert("err");
