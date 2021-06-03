@@ -1,14 +1,15 @@
 package main
 
 import (
-	. "dictionaryProject/algorithms"
-	. "dictionaryProject/data"
+	. "LearningEnglish/algorithms"
+	. "LearningEnglish/data"
 	"fmt"
+	"log"
+
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	ai "github.com/night-codes/mgo-ai"
 	"gopkg.in/mgo.v2"
-	"log"
 )
 
 func init() {
@@ -55,11 +56,9 @@ func main() {
 	router.GET("/showUsersList", ShowUsersList)
 	group.GET("/showUsersDictionary", ShowUsersDictionary)
 
-
 	err = router.Run(":8080")
 	if err != nil {
 		fmt.Println("Cant listen and serve on 0.0.0.0:8080")
 		return
 	}
 }
-

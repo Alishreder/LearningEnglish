@@ -1,10 +1,11 @@
 package algorithms
 
 import (
-	. "dictionaryProject/data"
-	"github.com/gin-gonic/gin"
+	. "LearningEnglish/data"
 	"net/http"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
 )
 
 func GetWordIndex(id uint64, dictionary []WordTranslate) (index int) {

@@ -1,12 +1,13 @@
 package algorithms
 
 import (
-	. "dictionaryProject/data"
+	. "LearningEnglish/data"
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"net/http"
 	"os"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
 )
 
 func GetUserFromBD(c *gin.Context) (User, error) {

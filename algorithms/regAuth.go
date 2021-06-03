@@ -1,14 +1,15 @@
 package algorithms
 
 import (
-	. "dictionaryProject/data"
-	"github.com/dgrijalva/jwt-go"
-	"github.com/gin-gonic/gin"
-	ai "github.com/night-codes/mgo-ai"
+	. "LearningEnglish/data"
 	"log"
 	"net/http"
 	"os"
 	"time"
+
+	"github.com/dgrijalva/jwt-go"
+	"github.com/gin-gonic/gin"
+	ai "github.com/night-codes/mgo-ai"
 )
 
 func createToken(authData User) string {
